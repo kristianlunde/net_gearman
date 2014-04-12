@@ -365,21 +365,27 @@ class Connection
      */
     static public function isConnected($conn)
     {
-		$type = strtolower(get_resource_type($conn));
+        $type = strtolower(get_resource_type($conn));
 
         if (is_null($conn) !== true &&
             is_resource($conn) === true &&
             ($type == 'stream' || $type == 'socket'))
-		{
-			$socket_meta = stream_get_meta_data($conn);
+        {
+            if($type == 'socket')
+            {
+            	return true;
+            } else
+            {
+                $socket_meta = stream_get_meta_data($conn);
 
-			if(! $socket_meta['eof'] && ! $socket_meta['timed_out'])
-			{
-				return true;
-			}
-		}
-
-		return false;
+                if(! $socket_meta['eof'] && ! $socket_meta['timed_out'])
+                {
+                    return true;
+                }
+            }
+        }
+        
+        return false;
     }
 
     /**
