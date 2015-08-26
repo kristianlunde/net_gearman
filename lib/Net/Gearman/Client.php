@@ -177,7 +177,7 @@ class Client implements ServerSetting
      */
     protected function runSingleTaskSet(Set $set)
     {
-        $this->runSet($set);
+        $this->runSet($set, $this->timeout);
         $task = current($set->tasks);
 
         return $task->result;
@@ -195,7 +195,7 @@ class Client implements ServerSetting
     public function doBackground($functionName, $workload, $unique = null)
     {
         $set = $this->createSet($functionName, $workload, $unique, Task::JOB_BACKGROUND);
-        $this->runSet($set);
+        $this->runSet($set, $this->timeout);
 
         return current($set->tasks);
     }
@@ -212,7 +212,7 @@ class Client implements ServerSetting
     public function doHighBackground($functionName, $workload, $unique = null)
     {
         $set = $this->createSet($functionName, $workload, $unique, Task::JOB_HIGH_BACKGROUND);
-        $this->runSet($set);
+        $this->runSet($set, $this->timeout);
 
         return current($set->tasks);
     }
@@ -229,7 +229,7 @@ class Client implements ServerSetting
     public function doLowBackground($functionName, $workload, $unique = null)
     {
         $set = $this->createSet($functionName, $workload, $unique, Task::JOB_LOW_BACKGROUND);
-        $this->runSet($set);
+        $this->runSet($set, $this->timeout);
 
         return current($set->tasks);
     }
@@ -247,7 +247,7 @@ class Client implements ServerSetting
     public function doEpoch($functionName, $workload, $epoch, $unique = null)
     {
         $set = $this->createSet($functionName, $workload, $unique, Task::JOB_EPOCH, $epoch);
-        $this->runSet($set);
+        $this->runSet($set, $this->timeout);
 
         return current($set->tasks);
     }
